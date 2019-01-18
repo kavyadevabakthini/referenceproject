@@ -1,0 +1,63 @@
+package com.cybermate.drug.service;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.cybermate.RestfulServicesUsingAjax.entity.Article;
+import com.cybermate.drug.model.PhysicalExamTxn;
+import com.cybermate.drug.model.PhysicalExamTxnDtl;
+
+import com.cybermate.drug.repository.ExamRepository;
+import com.cybermate.drug.repository.ExamTxnDtlsRepository;
+
+@Service
+public class ExamService implements IExamService {
+	@Autowired
+	ExamTxnDtlsRepository examdtlsRepository;
+	@Autowired
+	ExamRepository examRepository;
+
+	
+	@Override
+	public List<PhysicalExamTxnDtl> getAllDtls() {
+		List<PhysicalExamTxnDtl> list = new ArrayList<>();
+
+		examdtlsRepository.findAll().forEach(e -> list.add(e));
+		return list;
+	}
+	public Phys getArticleById(long articleId) {
+		Article obj = articleRepository.findById(articleId).get();
+		return obj;
+	}
+	@Override
+	public List<PhysicalExamTxn> getByMrnoEidVid(String mrno, String eid, String vid) {
+		List<PhysicalExamTxn> obj = examRepository.getByMrnoEidVid(mrno, eid, vid);
+		return obj;
+	}
+	
+	@Override
+	public void deleteTxn(String id) {
+		
+		
+	}
+	@Override
+	public void updateTxn(PhysicalExamTxn examTxn) {
+	examRepository.save(examTxn);
+		
+	}
+	@Override
+	public boolean addTxn(PhysicalExamTxn examTxn) {
+		
+		List<PhysicalExamTxn> persistedExam= examRepository.getByMrnoEidVid(examTxn.getMedicalRecordNo(),examTxn.getEpisodeId(),examTxn.getVisitId());
+		if (persistedExam == null) {
+			return false;
+		}
+		examRepository.save(examTxn);
+		return true;
+	}
+
+	
+}

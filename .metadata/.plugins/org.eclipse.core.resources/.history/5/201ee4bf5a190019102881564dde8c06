@@ -1,0 +1,159 @@
+package com.cybermate.drug.model;
+
+import java.io.Serializable;
+import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
+import java.sql.Timestamp;
+
+
+/**
+ * The persistent class for the physical_exam_txn_dtls database table.
+ * 
+ */
+@Entity
+@Table(name="physical_exam_txn_dtls")
+@NamedQuery(name="PhysicalExamTxnDtl.findAll", query="SELECT p FROM PhysicalExamTxnDtl p")
+public class PhysicalExamTxnDtl implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@Column(name="exam_id")
+	private int examId;
+
+	@Column(name="created_by")
+	private String createdBy;
+
+	@Column(name="created_on")
+	private Timestamp createdOn;
+
+	private String description;
+
+	@Column(name="exam_date")
+	private String examDate;
+
+	@Column(name="exam_progress")
+	private String examProgress;
+
+	@Column(name="exam_specific")
+	private String examSpecific;
+
+	@Column(name="exam_type")
+	private String examType;
+
+	
+	@JsonBackReference
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name="physical_exam_txn_id",nullable=false)
+	private PhysicalExamTxn examTxn;
+
+	public PhysicalExamTxn getExamTxn() {
+		return examTxn;
+	}
+
+	public void setExamTxn(PhysicalExamTxn examTxn) {
+		this.examTxn = examTxn;
+	}
+
+	private String status;
+
+	@Column(name="updated_by")
+	private String updatedBy;
+
+	@Column(name="updated_on")
+	private String updatedOn;
+
+	public PhysicalExamTxnDtl() {
+	}
+
+	public int getExamId() {
+		return this.examId;
+	}
+
+	public void setExamId(int examId) {
+		this.examId = examId;
+	}
+
+	public String getCreatedBy() {
+		return this.createdBy;
+	}
+
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public Timestamp getCreatedOn() {
+		return this.createdOn;
+	}
+
+	public void setCreatedOn(Timestamp createdOn) {
+		this.createdOn = createdOn;
+	}
+
+	public String getDescription() {
+		return this.description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getExamDate() {
+		return this.examDate;
+	}
+
+	public void setExamDate(String examDate) {
+		this.examDate = examDate;
+	}
+
+	public String getExamProgress() {
+		return this.examProgress;
+	}
+
+	public void setExamProgress(String examProgress) {
+		this.examProgress = examProgress;
+	}
+
+	public String getExamSpecific() {
+		return this.examSpecific;
+	}
+
+	public void setExamSpecific(String examSpecific) {
+		this.examSpecific = examSpecific;
+	}
+
+	public String getExamType() {
+		return this.examType;
+	}
+
+	public void setExamType(String examType) {
+		this.examType = examType;
+	}
+
+	
+	public String getStatus() {
+		return this.status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public String getUpdatedBy() {
+		return this.updatedBy;
+	}
+
+	public void setUpdatedBy(String updatedBy) {
+		this.updatedBy = updatedBy;
+	}
+
+	public String getUpdatedOn() {
+		return this.updatedOn;
+	}
+
+	public void setUpdatedOn(String updatedOn) {
+		this.updatedOn = updatedOn;
+	}
+
+}

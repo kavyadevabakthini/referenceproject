@@ -1,0 +1,19 @@
+package com.cybermate.drug.service;
+
+import java.util.List;
+
+
+import com.cybermate.drug.model.PhysicalExamTxn;
+import com.cybermate.drug.model.PhysicalExamTxnDtl;
+
+public interface IExamService {
+	//List<PhysicalExamTxn> getTxnDtlsById(String medicalRecordNo, String visitId, String episodeId);
+
+	List<PhysicalExamTxnDtl> getAllDtls();
+
+	public List<PhysicalExamTxn> getByMrnoEidVid(String mrno, int eid, int vid); 
+	public boolean addTxnDtl(PhysicalExamTxn examTxn);
+	public void updateTxnDtl(PhysicalExamTxnDtl examTxnDtl);
+	void deleteTxn(String id);
+	
+}

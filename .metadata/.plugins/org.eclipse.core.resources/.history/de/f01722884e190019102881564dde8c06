@@ -1,0 +1,66 @@
+package com.cybermate.drug.main.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.util.UriComponentsBuilder;
+
+import com.cybermate.drug.model.PhysicalExamTxn;
+import com.cybermate.drug.model.PhysicalExamTxnDtl;
+
+import com.cybermate.drug.service.IExamService;
+
+@CrossOrigin(origins = "*")
+@Controller
+@RequestMapping("api/v1")
+public class ExamController {
+@Autowired
+IExamService examService;
+
+@GetMapping("all")
+
+
+public ResponseEntity<List<PhysicalExamTxnDtl>> getAllDtls() {
+	List<PhysicalExamTxnDtl> list = examService.getAllDtls();
+	return new ResponseEntity<List<PhysicalExamTxnDtl>>(list, HttpStatus.OK);
+
+}
+
+@GetMapping("edit/{mrno}/{eid}/{vid}")
+public ResponseEntity<PhysicalExamTxn> getExamTxnByRecord(@PathVariable("mrno") String mrno,@PathVariable("eid") int eid,@PathVariable("vid") int vid) {
+	PhysicalExamTxn list = examService.getByMrnoEidVid(mrno, eid, vid).get(0);
+	System.out.println("posted");
+	return new ResponseEntity<PhysicalExamTxn>(list, HttpStatus.OK);
+}
+@PostMapping("ExamTxn/")
+public ResponseEntity<Void> addTxnDtls(@RequestBody PhysicalExamTxnDtl examTxnDtl, UriComponentsBuilder builder) {
+	boolean flag = examService.addTxnDtl(examTxnDtl);
+	if (flag == false) {
+		return new ResponseEntity<Void>(HttpStatus.CONFLICT);
+	}
+	HttpHeaders headers = new HttpHeaders();
+	headers.setLocation(builder.path("/ExamTxn/{id}").buildAndExpand(examTxnDtl.getExamId()).toUri());
+	System.out.println("posted");
+	return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
+}
+
+@DeleteMapping("delete/{id}")
+public ResponseEntity<Void> deleteTxn(@PathVariable("id") String id) {
+	examService.deleteTxn(id);
+	return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+}
+
+
+
+}

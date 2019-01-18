@@ -1,0 +1,12 @@
+package com.mkyong.web.controller;
+
+import org.springframework.boot.context.event.SpringApplicationEvent;
+
+public class MyApplication {
+
+	public static void main(String[] args) {
+		SpringApplicationEvent.run(MyApplication.class, args);
+
+	}
+
+}

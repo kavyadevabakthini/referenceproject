@@ -1,0 +1,6 @@
+com\cybermate\jcart\service\ICategoryService.class
+com\cybermate\jcart\model\Category.class
+com\cybermate\jcart\controller\CategoryController.class
+com\cybermate\jcart\MyApplication.class
+com\cybermate\jcart\service\CategoryService.class
+com\cybermate\jcart\repository\CategoryRepository.class
